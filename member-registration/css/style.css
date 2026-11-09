@@ -1,0 +1,242 @@
+/* ==========================================================
+   Member Registration - style.css
+   Plain CSS only (no frameworks).
+   ========================================================== */
+
+/* ---------- Variables ---------- */
+:root {
+    --accent: #fe6600;
+    --accent-dark: #d45500;
+    --text: #222831;
+    --muted: #6b7280;
+    --border: #d1d5db;
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --error: #c62828;
+    --error-bg: #fdecea;
+    --success: #2e7d32;
+    --success-bg: #e8f5e9;
+    --radius: 10px;
+}
+
+/* ---------- Base ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+}
+
+.container {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0 0 4px;
+    color: var(--accent);
+}
+
+.page-header p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Form ---------- */
+.form {
+    padding: 24px 28px;
+}
+
+fieldset {
+    border: none;
+    margin: 0 0 20px;
+    padding: 0;
+}
+
+legend {
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    border-bottom: 2px solid var(--accent);
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+}
+
+.row .field {
+    flex: 1;
+}
+
+.field {
+    margin-bottom: 14px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.format {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-left: 4px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(254, 102, 0, 0.2);
+}
+
+input.invalid {
+    border-color: var(--error);
+    background: var(--error-bg);
+}
+
+input.invalid::placeholder {
+    color: #d8a5a5;
+}
+
+.error-text {
+    margin: 4px 0 0;
+    font-size: 0.85rem;
+    color: var(--error);
+}
+
+.help-text {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* ---------- Buttons ---------- */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.actions.center {
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: var(--accent);
+}
+
+.btn-secondary:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ---------- Alerts ---------- */
+.alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.alert-error {
+    background: var(--error-bg);
+    color: var(--error);
+    border-left: 5px solid var(--error);
+}
+
+.alert-success {
+    background: var(--success-bg);
+    color: var(--success);
+    border-left: 5px solid var(--success);
+}
+
+/* ---------- Member card (profile page) ----------
+   TODO 24: Style the profile page so it looks like a membership ID card.
+   Use only standard CSS. Required:
+     .member-card    - hide overflow so the banner keeps the rounded corners
+     .member-banner  - flex row, label left / member number right,
+                       orange background (var(--accent)), white text
+     .member-label   - uppercase, letter-spacing, bold
+     .member-no      - monospace font, light translucent background
+     .member-body    - flex row: photo on the left, details on the right, gap + padding
+     .member-photo img
+                     - fixed 180px x 220px frame, object-fit: cover,
+                       rounded corners, orange outline/border
+     .member-name    - large heading, no top margin
+     .member-username- orange, bold
+     .details-table  - full width, collapsed borders, a light bottom border per row,
+                       grey bold <th> about 110px wide
+     .muted          - grey, small text
+   ------------------------------------------------ */
+
+
+
+/* ---------- Small screens ---------- */
+@media (max-width: 600px) {
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    /* TODO 25 (optional): stack the photo above the details on small screens. */
+}

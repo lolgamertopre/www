@@ -17,46 +17,46 @@ const RULES = [
         'label'   => 'First Name',
         // TODO 1: Starts with a letter; then letters, spaces, periods, apostrophes or hyphens; 2-50 characters total.
         //         Must accept names like "Ñiña" and "Ma. Clara". Hint: \p{L} matches any letter but needs the /u flag.
-        'pattern' => '/^[a-zA-Z0-9._%+-]+0@[a-zA-Z{2,0)$d',
+        'pattern' => '/^[\pL][\pL .\'\-]{1,49}$/u',
         'hint'    => 'Letters only (spaces, periods, apostrophes and hyphens allowed), 2-50 characters. e.g. Juan, Ma. Clara, Dela Cruz',
     ],
     'last_name' => [
         'label'   => 'Last Name',
         // TODO 2: Same rule as first_name.
-        'pattern' => '/^/p{L}[\p{L} .\'\-]{2,50}$/u$d/',
+        'pattern' => '/^[\pL][\pL .\'\-]{1,49}$/u',
         'hint'    => 'Letters only (spaces, periods, apostrophes and hyphens allowed), 2-50 characters. e.g. Dela Cruz, O\'Neil',
     ],
     'email' => [
         'label'   => 'Email Address',
         // TODO 3: local-part @ domain . top-level-domain (TLD is at least 2 letters).
         //         Must accept juan.delacruz@usjr.edu.ph; must reject juan@ and juan@usjr
-        'pattern' => '/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$',
+        'pattern' => '/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/',
         'hint'    => 'A valid email address. e.g. juan.delacruz@usjr.edu.ph',
     ],
     'mobile' => [
         'label'   => 'Mobile Number',
         // TODO 4: Philippine mobile number: 09 followed by 9 digits, OR +639 followed by 9 digits.
         //         Remember: + is a special character in regex.
-       'pattern' => '/^\+639\<d>9</d>$/',
+        'pattern' => '/^(?:09\d{9}|\+639\d{9})$/',
         'hint'    => 'Philippine mobile number: 09XXXXXXXXX or +639XXXXXXXXX. e.g. 09171234567',
     ],
     'birthdate' => [
         'label'   => 'Birthdate',
         // TODO 5: YYYY-MM-DD. Year 1900-2099, month 01-12, day 01-31.
         //         (Whether the date really exists, e.g. 2025-02-30, is checked later with checkdate().)
-        'pattern' => '//^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/',
+        'pattern' => '/^(?:19|20)\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/',
         'hint'    => 'Format YYYY-MM-DD. e.g. 2004-08-15',
     ],
     'zip_code' => [
         'label'   => 'ZIP Code',
         // TODO 6: Exactly 4 digits.
-        'pattern' => '/^\d{4}$',
+        'pattern' => '/^\d{4}$/',
         'hint'    => 'Exactly 4 digits. e.g. 6000',
     ],
     'username' => [
         'label'   => 'Username',
         // TODO 7: Starts with a letter; then letters, digits or underscore; 6-15 characters TOTAL.
-        'pattern' => '[a-zA-Z0-9._%+-]+0@[<a-zA-Z>',
+        'pattern' => '/^[A-Za-z][A-Za-z0-9_]{5,14}$/',
         'hint'    => '6-15 characters, must start with a letter; letters, digits and underscore only. e.g. juan_dc2004',
     ],
     'password' => [
@@ -64,7 +64,7 @@ const RULES = [
         // TODO 8: At least 8 characters, no spaces, and contains at least one lowercase letter,
         //         one uppercase letter, one digit and one special (non-alphanumeric) character.
         //         Hint: use lookaheads, e.g. (?=.*[a-z]) means "somewhere ahead there is a lowercase letter".
-        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9\s])\S{8,}$',
+        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9\s])\S{8,}$/',
         'hint'    => 'At least 8 characters with an uppercase letter, a lowercase letter, a digit and a special character; no spaces.',
     ],
 ];
@@ -73,7 +73,7 @@ const RULES = [
 const PHOTO_MAX_BYTES  = 2 * 1024 * 1024;   // 2 MB
 // TODO 9: The ORIGINAL file name must end in .jpg, .jpeg or .png (any letter case).
 //         Allowed characters before the extension: letters, digits, underscore, hyphen, period, space.
-const PHOTO_NAME_PATTERN = '/^[A-Za-z0-9_\-. ]+\.(jpe?g|png)$';
+const PHOTO_NAME_PATTERN = '/^[A-Za-z0-9_\-. ]+\.(jpe?g|png)$/';
 const PHOTO_MIME_TYPES   = ['image/jpeg' => 'jpg', 'image/png' => 'png'];
 
 /**

@@ -120,10 +120,14 @@ require_once __DIR__ . '/includes/helpers.php';
             <div class="field">
                 <label for="photo">Upload Photo <span class="format">JPG or PNG, max 2 MB</span></label>
                 <input type="hidden" name="MAX_FILE_SIZE" value="<?= PHOTO_MAX_BYTES ?>">
-                <input type="file" id="photo" name="photo"
-                       class="<?= invalid_class('photo') ?>">
+                <div class="file-picker">
+                    <label for="photo" class="file-button">Choose File</label>
+                    <span id="photo-name" class="file-name">No file chosen</span>
+                    <input type="file" id="photo" name="photo"
+                           class="<?= invalid_class('photo') ?>">
+                </div>
                 <?= error_for('photo') ?>
-                <p class="help-text">For security, you must choose the photo again if the form has errors.</p>
+                <p class="help-text">For security, the browser does not keep the actual file object after a failed submit, but your selected file name can be remembered for convenience.</p>
             </div>
         </fieldset>
 
@@ -133,6 +137,35 @@ require_once __DIR__ . '/includes/helpers.php';
         </div>
     </form>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const photoInput = document.getElementById('photo');
+        const photoName = document.getElementById('photo-name');
+
+        const updatePhotoName = () => {
+            const chosen = photoInput.files && photoInput.files[0];
+            const savedName = sessionStorage.getItem('member-photo-name');
+            const name = chosen ? chosen.name : (savedName || 'No file chosen');
+
+            photoName.textContent = name;
+
+            if (chosen) {
+                sessionStorage.setItem('member-photo-name', chosen.name);
+            }
+        };
+
+        photoInput.addEventListener('change', updatePhotoName);
+
+        const form = photoInput.form;
+        form.addEventListener('submit', () => {
+            if (photoInput.files && photoInput.files[0]) {
+                sessionStorage.setItem('member-photo-name', photoInput.files[0].name);
+            }
+        });
+
+        updatePhotoName();
+    });
+</script>
 </body>
 </html>
 <?php

@@ -118,6 +118,43 @@ input[type="file"] {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.file-picker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+}
+
+.file-picker input[type="file"] {
+    display: none;
+}
+
+.file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    padding: 10px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.file-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text);
+}
+
 input:focus {
     outline: none;
     border-color: var(--accent);
@@ -210,26 +247,97 @@ input.invalid::placeholder {
     border-left: 5px solid var(--success);
 }
 
-/* ---------- Member card (profile page) ----------
-   TODO 24: Style the profile page so it looks like a membership ID card.
-   Use only standard CSS. Required:
-     .member-card    - hide overflow so the banner keeps the rounded corners
-     .member-banner  - flex row, label left / member number right,
-                       orange background (var(--accent)), white text
-     .member-label   - uppercase, letter-spacing, bold
-     .member-no      - monospace font, light translucent background
-     .member-body    - flex row: photo on the left, details on the right, gap + padding
-     .member-photo img
-                     - fixed 180px x 220px frame, object-fit: cover,
-                       rounded corners, orange outline/border
-     .member-name    - large heading, no top margin
-     .member-username- orange, bold
-     .details-table  - full width, collapsed borders, a light bottom border per row,
-                       grey bold <th> about 110px wide
-     .muted          - grey, small text
-   ------------------------------------------------ */
+.member-card {
+    overflow: hidden;
+}
 
+.member-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: var(--accent);
+    color: #fff;
+}
 
+.member-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.member-no {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.member-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+.member-photo {
+    margin: 0;
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.member-photo img {
+    display: block;
+    width: 180px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 3px solid var(--accent);
+    background: #f3f3f3;
+}
+
+.member-details {
+    flex: 1;
+}
+
+.member-name {
+    margin: 0 0 8px;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+.member-username {
+    margin: 0 0 16px;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.details-table th,
+.details-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.details-table th {
+    width: 120px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
 
 /* ---------- Small screens ---------- */
 @media (max-width: 600px) {
@@ -238,5 +346,16 @@ input.invalid::placeholder {
         gap: 0;
     }
 
-    /* TODO 25 (optional): stack the photo above the details on small screens. */
+    .member-body {
+        flex-direction: column;
+    }
+
+    .member-photo {
+        width: 100%;
+    }
+
+    .member-photo img {
+        width: 100%;
+        max-width: 220px;
+    }
 }

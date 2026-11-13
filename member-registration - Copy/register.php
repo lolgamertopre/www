@@ -66,25 +66,18 @@ $photoName = '';
 //          Source: $_FILES['photo']['tmp_name']   Destination: $uploadDir . $photoName
 //          If it fails, set $_SESSION['errors'] = ['photo' => 'The photo could not be saved on the server.'];
 //          restore $_SESSION['old'] (same as above), redirect to index.php and exit.
+$photoName = 'member_' . bin2hex(random_bytes(8)) . '.' . $extension;
 
-
+if (!move_uploaded_file($_FILES['photo']['tmp_name'], $uploadDir . $photoName)) {
+    $_SESSION['errors'] = ['photo' => 'The photo could not be saved on the server.'];
+    $_SESSION['old']    = array_intersect_key($input, array_flip($fields));
+    header('Location: index.php');
+    exit;
+}
 
 // Step 3b: success. Keep only what the profile page needs (NEVER the password).
 $_SESSION['member'] = [
     'member_no'     => 'MBR-' . date('Y') . '-' . str_pad((string) random_int(1, 9999), 4, '0', STR_PAD_LEFT),
-    'first_name'    => $input['first_name'],
-    // TODO 16: Add last_name, email, mobile, birthdate, zip_code and username from $input.
-
-    'photo'         => 'uploads/' . $photoName,
-    'registered_at' => date('F j, Y g:i A'),
-];
-
-header('Location: profile.php');
-exit;
-
-
-$_SESSION['member'] = [
-    'member_no'     => $input ["member_id"],
     'first_name'    => $input['first_name'],
     'last_name'     => $input['last_name'],
     'email'         => $input['email'],
@@ -96,19 +89,5 @@ $_SESSION['member'] = [
     'registered_at' => date('F j, Y g:i A'),
 ];
 
-$searchMemberIDSQL = "SELECT * FROM members WHERE member_no = :member_no";
-
-$searchMemberIDstatement = $db->prepare($searchMemberIDSQL);
-$searchMemberIDstatement->bindParam(1, $input['member_id'], PDO::PARAM_INT);
-$searchMemberIDstatement->execute();
-
-if ($searchMemberidstatement-> rowCOUNT() > 0) {
-    $SESSION['errors'] = ['member_id' => 'Member ID already exists. Please choose a different one.'];
-}else{
-    $insertMemberinfoSQL = "INSERT INTO members VALUES (?,?,?,?,?)";
-    $insertMemberinfoStatement = $db->prepare($insertMemberinfoSQL);
-    $insertMemberinfoStatement->bindParam(1, $input['member_id'], PDO :: PARAM_INT);
-    $insertMemberinfoStatement->bindParam(2, $input['lastname_name'], PDO :: PARAM_INT);
-    $insertMemberinfoStatement->bindParam(3, $input['first_name'], PDO :: PARAM_INT);
-    
-}
+header('Location: profile.php');
+exit;

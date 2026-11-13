@@ -9,7 +9,12 @@
  *
  * The redirect after a successful POST (Post/Redirect/Get) prevents the
  * form from being re-submitted when the user refreshes the profile page.
+ * 
+ * 
  */
+
+
+require_once __DIR__ . '/db/db.php';
 session_start();
 date_default_timezone_set('Asia/Manila');
 require_once __DIR__ . '/includes/validation.php';
@@ -76,3 +81,34 @@ $_SESSION['member'] = [
 
 header('Location: profile.php');
 exit;
+
+
+$_SESSION['member'] = [
+    'member_no'     => $input ["member_id"],
+    'first_name'    => $input['first_name'],
+    'last_name'     => $input['last_name'],
+    'email'         => $input['email'],
+    'mobile'        => $input['mobile'],
+    'birthdate'     => $input['birthdate'],
+    'zip_code'      => $input['zip_code'],
+    'username'      => $input['username'],
+    'photo'         => 'uploads/' . $photoName,
+    'registered_at' => date('F j, Y g:i A'),
+];
+
+$searchMemberIDSQL = "SELECT * FROM members WHERE member_no = :member_no";
+
+$searchMemberIDstatement = $db->prepare($searchMemberIDSQL);
+$searchMemberIDstatement->bindParam(1, $input['member_id'], PDO::PARAM_INT);
+$searchMemberIDstatement->execute();
+
+if ($searchMemberidstatement-> rowCOUNT() > 0) {
+    $SESSION['errors'] = ['member_id' => 'Member ID already exists. Please choose a different one.'];
+}else{
+    $insertMemberinfoSQL = "INSERT INTO members VALUES (?,?,?,?,?)";
+    $insertMemberinfoStatement = $db->prepare($insertMemberinfoSQL);
+    $insertMemberinfoStatement->bindParam(1, $input['member_id'], PDO :: PARAM_INT);
+    $insertMemberinfoStatement->bindParam(2, $input['lastname_name'], PDO :: PARAM_INT);
+    $insertMemberinfoStatement->bindParam(3, $input['first_name'], PDO :: PARAM_INT);
+    
+}
